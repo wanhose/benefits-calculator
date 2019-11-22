@@ -10,7 +10,7 @@ public class Main {
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
-        App app = new App(args);
+        App app = new App();
         app.exec();
     }
 }
