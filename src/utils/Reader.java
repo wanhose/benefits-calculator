@@ -12,7 +12,6 @@ import java.util.Map;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import models.Category;
 import models.Product;
 
@@ -48,11 +47,16 @@ public class Reader {
             reader = new BufferedReader(new FileReader(this.csvFile));
             line = reader.readLine();
 
+            List<Integer> positions = this.getPositions(line);
+
             while ((line = reader.readLine()) != null) {
                 String[] product = line.split(";");
-                Category category = categories.stream().filter(categ -> categ.getName().equals(product[1])).findAny().orElse(categories.size() > 0 ? categories.get(categories.size() - 1) : null);
+                String id = product[positions.get(0)];
+                Category category = categories.stream().filter(categ -> categ.getName().equals(product[positions.get(1)])).findAny().orElse(categories.size() > 0 ? new Category(product[positions.get(1)], categories.get(categories.size() - 1).getBonuses()) : null);
+                Double cost = ParseUtils.parseDouble(ParseUtils.parsePriceString(product[positions.get(2)]));
+                int quantity = ParseUtils.parseInt(ParseUtils.parseQuantityString(product[positions.get(3)]));
 
-                products.add(new Product(product[0], category, ParseUtils.parseDouble(ParseUtils.parsePriceString(product[2])), ParseUtils.parseInt(ParseUtils.parseQuantityString(product[3]))));
+                products.add(new Product(id, category, cost, quantity));
             }
         } catch (FileNotFoundException fnfe) {
             System.out.println("\nERROR. A critical error has ocurred. Please contact administrator for more information.\n");
@@ -72,9 +76,7 @@ public class Reader {
     }
 
     /**
-     * This method decode JSON file and it returns categories list with a structure like...
-     * "car" => HashMap<String, Double>
-     * "mobile" => HashMap<String, Double>
+     * This method decode JSON file and it returns parsed categories list.
      * @return categories
      */
     private List<Category> getCategories() {
@@ -119,5 +121,47 @@ public class Reader {
         }
 
         return bonusesDecoded;
+    }
+
+    /**
+     * This method returns columns position list.
+     * @param columnLine
+     * @return positions
+     */
+    private List<Integer> getPositions(String columnLine) {
+        List<Integer> columnOrderList = new ArrayList<>();
+        String[] columns = columnLine.split(";");
+
+        for (int i = 0; i < columns.length; i++) {
+            columnOrderList.add(i, getPosition(columns[i]));
+        }
+
+        return columnOrderList;
+    }
+
+    /**
+     * This method returns column position by column name.
+     * @param column
+     * @return position
+     */
+    private Integer getPosition(String column) {
+        int position = 0;
+
+        switch (column) {
+            case "PRODUCT":
+                position = 0;
+                break;
+            case "CATEGORY":
+                position = 1;
+                break;
+            case "COST":
+                position = 2;
+                break;
+            case "QUANTITY":
+                position = 3;
+                break;
+        }
+
+        return position;
     }
 }

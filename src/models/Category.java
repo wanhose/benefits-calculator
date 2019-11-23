@@ -21,7 +21,7 @@ public class Category {
     }
 
     /**
-     * This methods returns name property.
+     * This method returns name property.
      * @return name
      */
     public String getName() {
@@ -37,7 +37,7 @@ public class Category {
     }
 
     /**
-     * This methods returns bonuses property.
+     * This method returns bonuses property.
      * @return bonuses
      */
     public HashMap<String,Double> getBonuses() {

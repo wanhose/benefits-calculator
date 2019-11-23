@@ -1,7 +1,10 @@
 package app;
 
 import java.io.File;
+import java.util.List;
 import java.util.Scanner;
+import models.Product;
+import utils.Calculator;
 import utils.FileUtils;
 import utils.IOUtils;
 import utils.Reader;
@@ -18,7 +21,15 @@ public class App {
         Reader reader = new Reader(csvFile, jsonFile);
 
         if (csvFile != null && jsonFile != null) {
-            reader.getProducts();
+            List<Product> products = reader.getProducts();
+
+            if (products.size() > 0) {
+                Calculator calculator = new Calculator(products);
+
+                calculator.calculate();
+            } else {
+                System.out.println("INFO. There're no results to show. Please, check .csv file.");
+            }            
         } else {
             System.out.println("\nERROR. A critical error has ocurred. Please contact administrator for more information.\n");
         }

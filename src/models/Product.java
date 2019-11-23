@@ -25,7 +25,7 @@ public class Product {
     }
 
     /**
-     * This methods returns id property.
+     * This method returns id property.
      * @return id
      */
     public String getId() {
@@ -41,7 +41,7 @@ public class Product {
     }
 
     /**
-     * This methods returns category property.
+     * This method returns category property.
      * @return category
      */
     public Category getCategory() {
@@ -57,7 +57,7 @@ public class Product {
     }
 
     /**
-     * This methods returns cost property.
+     * This method returns cost property.
      * @return cost
      */
     public Double getCost() {
@@ -73,7 +73,7 @@ public class Product {
     }
 
     /**
-     * This methods returns quantity property.
+     * This method returns quantity property.
      * @return quantity
      */
     public int getQuantity() {

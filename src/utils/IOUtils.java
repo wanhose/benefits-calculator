@@ -5,7 +5,7 @@ import java.util.Scanner;
 public abstract class IOUtils {
 
     /**
-     * This methods allows text input to user.
+     * This method allows text input to user.
      * @param question
      * @return answer
      */
