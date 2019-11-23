@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Scanner;
 import utils.FileUtils;
 import utils.IOUtils;
+import utils.Reader;
 
 public class App {
 
@@ -14,9 +15,10 @@ public class App {
         Scanner input = new Scanner(System.in);
         File csvFile = this.askFile(input, "csv", "Please, enter .csv file path: ");
         File jsonFile = this.askFile(input, "json", "Please, enter .json file path: ");
+        Reader reader = new Reader(csvFile, jsonFile);
 
         if (csvFile != null && jsonFile != null) {
-
+            reader.getProducts();
         } else {
             System.out.println("\nERROR. A critical error has ocurred. Please contact administrator for more information.\n");
         }
